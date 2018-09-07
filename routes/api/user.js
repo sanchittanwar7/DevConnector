@@ -20,7 +20,7 @@ router.post("/register", (req, res) => {
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       errors.errors.email = "Email already exists";
-      return res.status(400).json(errors);
+      return res.status(400).json(errors.errors);
     }
     const avatar = gravatar.url(req.body.email, {
       s: "200",
@@ -49,7 +49,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const errors = validateLoginData(req.body);
   if (!errors.isValid) {
-    return res.status(400).json(errors);
+    return res.status(400).json(errors.errors);
   }
 
   const email = req.body.email;
@@ -57,13 +57,13 @@ router.post("/login", (req, res) => {
   User.findOne({ email }).then(user => {
     if (!user) {
       errors.errors.email = "User not found";
-      return res.status(404).json(errors);
+      return res.status(404).json(errors.errors);
     }
 
     bcrypt.compare(password, user.password).then(isMatch => {
       if (!isMatch) {
         errors.errors.password = "Password invalid";
-        return res.status(400).json(errors);
+        return res.status(400).json(errors.errors);
       }
       const payload = {
         name: user.name,

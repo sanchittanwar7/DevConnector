@@ -17,13 +17,13 @@ mongoose
   .catch(err => console.log("error", err));
 
 //Import routes
-const users = require("./routes/api/users");
-const profiles = require("./routes/api/profiles");
-const posts = require("./routes/api/posts");
+const user = require("./routes/api/user");
+const profile = require("./routes/api/profile");
+const post = require("./routes/api/post");
 
-app.use("/api/users", users);
-app.use("/api/profiles", profiles);
-app.use("/api/posts", posts);
+app.use("/api/user", user);
+app.use("/api/profile", profile);
+app.use("/api/post", post);
 app.use(passport.initialize());
 require("./config/passport")(passport);
 

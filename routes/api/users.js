@@ -12,8 +12,8 @@ const validateLoginData = require("../../validations/login");
 router.get("/test", (req, res) => res.json({ msg: "User's working" }));
 
 router.post("/register", (req, res) => {
-  const errors = validateRegistrationData(req.body);
-  if (!errors.isValid) {
+  const { errors, isValid } = validateRegistrationData(req.body);
+  if (!isValid) {
     return res.status(400).json({ errors });
   }
 
